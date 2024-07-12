@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import Loader from '../../components/loader/Loader';
 
 // Example background image URL (replace with your own)
-const backgroundImageUrl = 'https://images.unsplash.com/photo-1718353205363-e16e4c8e5d25?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmFja2dyb3VuZCUyMGltYWdlJTIwb2YlMjBtdXNpYyUyMGluc3RydW1lbnR8ZW58MHx8MHx8fDA%3D';
+const backgroundImageUrl = 'https://img.freepik.com/free-photo/front-view-education-day-concept_23-2148779756.jpg?t=st=1720747555~exp=1720751155~hmac=5ebc2c1401c43ad29eb2b5a3e5f6615f7e057bf67b867eb80435b333aae35d80&w=740';
 
 function Login() {
     const context = useContext(myContext);

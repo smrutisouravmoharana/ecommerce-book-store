@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import myContext from '../../../context/data/myContext';
 
 // Example URL for background image
-const backgroundImageUrl = 'https://img.freepik.com/free-photo/smartphone-with-headphones_23-2147735024.jpg?uid=R147306243&ga=GA1.1.1087679078.1714562823&semt=ais_user';
+const backgroundImageUrl = 'https://img.freepik.com/free-photo/3d-view-books_23-2150473308.jpg?t=st=1720747696~exp=1720751296~hmac=3a25bfb4b9509ed426ca4611fbb95ba2a835390c9a80660b489992b887db221b&w=826';
 
 function AddProduct() {
     const context = useContext(myContext);

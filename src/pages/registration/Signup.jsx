@@ -8,7 +8,7 @@ import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import Loader from '../../components/loader/Loader';
 
 // Example background image URL (replace with your own)
-const backgroundImageUrl = 'https://images.unsplash.com/photo-1718353205363-e16e4c8e5d25?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmFja2dyb3VuZCUyMGltYWdlJTIwb2YlMjBtdXNpYyUyMGluc3RydW1lbnR8ZW58MHx8MHx8fDA%3D';
+const backgroundImageUrl = 'https://img.freepik.com/free-photo/various-books-with-spectacles-table_1252-713.jpg?t=st=1720747641~exp=1720751241~hmac=311c0ce54c910b72c698ac4b111519db12873315bbdfecbf55a2cd8f27ada62a&w=740';
 
 function Signup() {
     const [name, setName] = useState("");
