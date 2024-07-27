@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import MyContext from './myContext';
 import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
@@ -148,6 +146,19 @@ function myState(props) {
         }
     };
 
+    const cancelOrder = async (orderId) => {
+        setLoading(true);
+        try {
+            await setDoc(doc(fireDB, 'order', orderId), { status: 'Cancelled' }, { merge: true });
+            toast.success("Order cancelled successfully");
+            getOrderData();
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
+
     const getUserData = async () => {
         setLoading(true);
         try {
@@ -172,7 +183,7 @@ function myState(props) {
     return (
         <MyContext.Provider value={{
             mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product,
-            edithandle, updateProduct, deleteProduct, order, updateOrder, editOrder,
+            edithandle, updateProduct, deleteProduct, order, updateOrder, editOrder, cancelOrder,
             user, searchkey, setSearchkey, filterType, setFilterType, filterBrandName, setFilterBrandName
         }}>
             {props.children}

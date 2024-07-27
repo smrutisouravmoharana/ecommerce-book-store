@@ -63,7 +63,7 @@ function Cart() {
         theme: 'colored',
       });
     }
-
+  
     const addressInfo = {
       name,
       address,
@@ -75,7 +75,7 @@ function Cart() {
         year: 'numeric',
       }),
     };
-
+  
     var options = {
       key: 'rzp_test_eKrFvUHKiJyWWY',
       key_secret: 'VEU5sdxuZ6V5tyaW8nqllu9P',
@@ -84,12 +84,12 @@ function Cart() {
       order_receipt: 'order_rcptid_' + name,
       name: 'E-Bharat',
       description: 'for testing purpose',
-      handler: function (response) {
+      handler: async function (response) {
         console.log(response);
         toast.success('Payment Successful');
-
+  
         const paymentId = response.razorpay_payment_id;
-
+  
         const orderInfo = {
           cartItems,
           addressInfo,
@@ -104,23 +104,31 @@ function Cart() {
           status: 'Pending', // Initial status
           grandTotal: grandTotal.toFixed(2) // Include grand total
         };
-
+  
         try {
           const orderRef = collection(fireDB, 'order');
-          addDoc(orderRef, orderInfo);
+          await addDoc(orderRef, orderInfo);
+  
+          // Clear the cart after successful payment
+          cartItems.forEach((item) => {
+            dispatch(deleteFromCart(item));
+          });
+          toast.success('Cart cleared');
         } catch (error) {
           console.log(error);
+          toast.error('Failed to save order');
         }
       },
       theme: {
         color: '#3399cc',
       },
     };
-
+  
     var pay = new window.Razorpay(options);
     pay.open();
     console.log(pay);
   };
+  
 
   return (
     <Layout>

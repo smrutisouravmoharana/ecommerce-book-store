@@ -13,6 +13,11 @@ function UpdateProduct() {
         window.history.back(); // Navigate back
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProducts({ ...products, [name]: value });
+    };
+
     return (
         <div className='flex justify-center items-center min-h-screen' style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className='bg-gray-800 px-10 py-10 rounded-xl w-full max-w-md relative'>
@@ -23,9 +28,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        value={products.title}
-                        onChange={(e) => setProducts({ ...products, title: e.target.value })}
                         name='title'
+                        value={products.title}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product title'
                     />
@@ -33,9 +38,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        value={products.price}
-                        onChange={(e) => setProducts({ ...products, price: e.target.value })}
                         name='price'
+                        value={products.price}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product price'
                     />
@@ -43,9 +48,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        value={products.salePrice}
-                        onChange={(e) => setProducts({ ...products, salePrice: e.target.value })}
                         name='salePrice'
+                        value={products.salePrice}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product sale price'
                     />
@@ -53,9 +58,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        value={products.brandName}
-                        onChange={(e) => setProducts({ ...products, brandName: e.target.value })}
                         name='brandName'
+                        value={products.brandName}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product brand name'
                     />
@@ -63,19 +68,19 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
+                        name='imageUrl'
                         value={products.imageUrl}
-                        onChange={(e) => setProducts({ ...products, imageUrl: e.target.value })}
-                        name='imageurl'
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
-                        placeholder='Product imageUrl'
+                        placeholder='Product image URL'
                     />
                 </div>
                 <div>
                     <input
                         type='text'
-                        value={products.category}
-                        onChange={(e) => setProducts({ ...products, category: e.target.value })}
                         name='category'
+                        value={products.category}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product category'
                     />
@@ -86,10 +91,20 @@ function UpdateProduct() {
                         rows='10'
                         name='description'
                         value={products.description}
-                        onChange={(e) => setProducts({ ...products, description: e.target.value })}
+                        onChange={handleChange}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product description'
                     ></textarea>
+                </div>
+                <div>
+                    <input
+                        type='number'
+                        name='stockQuantity'
+                        value={products.stockQuantity}
+                        onChange={handleChange}
+                        className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
+                        placeholder='Product stock quantity'
+                    />
                 </div>
                 <div className='flex justify-center mb-3'>
                     <button

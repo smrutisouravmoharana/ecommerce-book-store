@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import myContext from '../../context/data/myContext';
 import Layout from '../../components/layout/Layout';
@@ -9,29 +9,34 @@ function Order() {
   const userid = user ? user.user.uid : null;
   const email = user ? user.user.email : null;
   const context = useContext(myContext);
-  const { mode, loading, order } = context;
+  const { mode, loading, order, cancelOrder } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!userid) {
-      navigate('/login'); // Navigate to the sign-in page if not logged in
-    } else if (email === "zounds2024.musik@gmail.com") {
-      navigate('/dashboard'); // Navigate to the Dashboard page
+      navigate('/login');
+    } else if (email === "smrutisouravmoharana222@gmail.com") {
+      navigate('/dashboard');
     }
   }, [email, userid, navigate]);
 
   if (!userid) {
-    return null; // Return null to prevent rendering while redirecting
+    return null;
   }
 
   const userOrders = order.filter(obj => obj.userid === userid);
+
+  const handleCancelOrder = (orderId) => {
+    console.log('Cancel Order Clicked', orderId);
+    cancelOrder(orderId);
+  };
 
   return (
     <Layout>
       {loading && <Loader />}
       {userOrders.length > 0 ? (
-        <div className="h-full pt-10">
-          <table className={`min-w-full ${mode === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+        <div className="h-full pt-10 overflow-x-auto">
+          <table className={`min-w-full ${mode === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} table-auto`}>
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b">S.NO</th>
@@ -46,6 +51,7 @@ function Order() {
                 <th className="py-2 px-4 border-b">Price</th>
                 <th className="py-2 px-4 border-b">Grand Total</th>
                 <th className="py-2 px-4 border-b">Status</th>
+                <th className="py-2 px-4 border-b">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +73,16 @@ function Order() {
                       <td className="py-2 px-4 border-b">₹{item.price}</td>
                       <td className="py-2 px-4 border-b">₹{order.grandTotal}</td>
                       <td className="py-2 px-4 border-b">{order.status}</td>
+                      <td className="py-2 px-4 border-b">
+                        {order.status !== 'Cancelled' && (
+                          <button 
+                            onClick={() => handleCancelOrder(order.id)} 
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                          >
+                            Cancel Order
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </React.Fragment>
@@ -74,13 +90,12 @@ function Order() {
             </tbody>
           </table>
 
-          <div className="mt-8"></div> {/* Space after the table */}
+          <div className="mt-8"></div>
         </div>
       ) : (
         <h2 className='text-center text-2xl text-white'>No Orders</h2>
       )}
 
-      {/* Footer part */}
       <footer className="mt-8">
         {/* Your footer content here */}
       </footer>

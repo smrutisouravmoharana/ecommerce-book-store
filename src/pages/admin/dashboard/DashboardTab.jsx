@@ -155,6 +155,9 @@ function DashboardTab() {
                                                     Category
                                                 </th>
                                                 <th scope="col" className="px-6 py-3">
+                                                    Stock Quantity
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
                                                     Date
                                                 </th>
                                                 <th scope="col" className="px-6 py-3">
@@ -171,6 +174,7 @@ function DashboardTab() {
                                                     brandName,
                                                     imageUrl,
                                                     category,
+                                                    stockQuantity, // Added
                                                     date,
                                                 } = item;
                                                 return (
@@ -178,8 +182,7 @@ function DashboardTab() {
                                                         key={index}
                                                         className="bg-gray-50 border-b dark:border-gray-700"
                                                         style={{
-                                                            backgroundColor:
-                                                                mode === "dark" ? "rgb(46 49 55)" : "",
+                                                            backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
                                                             color: mode === "dark" ? "white" : "",
                                                         }}
                                                     >
@@ -221,6 +224,12 @@ function DashboardTab() {
                                                             style={{ color: mode === "dark" ? "white" : "" }}
                                                         >
                                                             {category}
+                                                        </td>
+                                                        <td
+                                                            className="px-6 py-4 text-black"
+                                                            style={{ color: mode === "dark" ? "white" : "" }}
+                                                        >
+                                                            {stockQuantity} {/* Added */}
                                                         </td>
                                                         <td
                                                             className="px-6 py-4 text-black"
@@ -284,6 +293,7 @@ function DashboardTab() {
                                 </div>
                             </div>
                         </TabPanel>
+
                         {/* {order} */}
                         <TabPanel>
                             <div className="px-4 md:px-0 mb-16">
@@ -507,7 +517,7 @@ function DashboardTab() {
                                                 })
                                             )}
                                         </tbody>
-                                    </table>):( <p className="text-center mb-5">Order List empty</p>)}
+                                    </table>) : (<p className="text-center mb-5">Order List empty</p>)}
                                 </div>
                             </div>
                         </TabPanel>
