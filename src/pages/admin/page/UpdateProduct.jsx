@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import myContext from '../../../context/data/myContext';
 
 // Example URL for background image
-const backgroundImageUrl = 'https://img.freepik.com/free-photo/close-up-open-book-with-blue-background_23-2148255825.jpg?t=st=1720747789~exp=1720751389~hmac=11472b0ad25d7432cc8b5ad64a5ef24812805bb72c518aaaa3a5e22de73bb144&w=740';
+const backgroundImageUrl = 'https://img.freepik.com/free-photo/3d-view-books_23-2150473308.jpg?t=st=1720747696~exp=1720751296~hmac=3a25bfb4b9509ed426ca4611fbb95ba2a835390c9a80660b489992b887db221b&w=826';
 
 function UpdateProduct() {
     const context = useContext(myContext);
@@ -11,11 +11,6 @@ function UpdateProduct() {
 
     const goBack = () => {
         window.history.back(); // Navigate back
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProducts({ ...products, [name]: value });
     };
 
     return (
@@ -28,9 +23,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        name='title'
                         value={products.title}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, title: e.target.value })}
+                        name='title'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product title'
                     />
@@ -38,9 +33,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        name='price'
                         value={products.price}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, price: e.target.value })}
+                        name='price'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product price'
                     />
@@ -48,9 +43,9 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        name='salePrice'
                         value={products.salePrice}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, salePrice: e.target.value })}
+                        name='salePrice'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product sale price'
                     />
@@ -58,29 +53,29 @@ function UpdateProduct() {
                 <div>
                     <input
                         type='text'
-                        name='brandName'
                         value={products.brandName}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, brandName: e.target.value })}
+                        name='brandName'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
-                        placeholder='Product brand name'
+                        placeholder='Product Auther name'
                     />
                 </div>
                 <div>
                     <input
                         type='text'
-                        name='imageUrl'
                         value={products.imageUrl}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, imageUrl: e.target.value })}
+                        name='imageurl'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
-                        placeholder='Product image URL'
+                        placeholder='Product imageUrl'
                     />
                 </div>
                 <div>
                     <input
                         type='text'
-                        name='category'
                         value={products.category}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, category: e.target.value })}
+                        name='category'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product category'
                     />
@@ -91,20 +86,10 @@ function UpdateProduct() {
                         rows='10'
                         name='description'
                         value={products.description}
-                        onChange={handleChange}
+                        onChange={(e) => setProducts({ ...products, description: e.target.value })}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product description'
                     ></textarea>
-                </div>
-                <div>
-                    <input
-                        type='number'
-                        name='stockQuantity'
-                        value={products.stockQuantity}
-                        onChange={handleChange}
-                        className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
-                        placeholder='Product stock quantity'
-                    />
                 </div>
                 <div className='flex justify-center mb-3'>
                     <button

@@ -155,7 +155,7 @@ function DashboardTab() {
                                                     Category
                                                 </th>
                                                 <th scope="col" className="px-6 py-3">
-                                                    Stock Quantity
+                                                    Stock Status
                                                 </th>
                                                 <th scope="col" className="px-6 py-3">
                                                     Date
@@ -174,7 +174,7 @@ function DashboardTab() {
                                                     brandName,
                                                     imageUrl,
                                                     category,
-                                                    stockQuantity, // Added
+                                                    stockStatus,
                                                     date,
                                                 } = item;
                                                 return (
@@ -229,7 +229,7 @@ function DashboardTab() {
                                                             className="px-6 py-4 text-black"
                                                             style={{ color: mode === "dark" ? "white" : "" }}
                                                         >
-                                                            {stockQuantity} {/* Added */}
+                                                            {stockStatus}
                                                         </td>
                                                         <td
                                                             className="px-6 py-4 text-black"
