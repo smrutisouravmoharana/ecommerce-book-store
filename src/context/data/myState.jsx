@@ -160,7 +160,7 @@ function myState(props) {
                     ...item,
                     uid,
                     grandtotal: totalAmount,
-                    email: 'smrutisouravmoharana222@gmail.com',
+                    email: 'pustaksangrah540@gmail.com',
                     time: Timestamp.now(),
                     orderDate: new Date().toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" })
                 };

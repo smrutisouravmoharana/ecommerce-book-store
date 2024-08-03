@@ -17,7 +17,7 @@ function Order() {
   useEffect(() => {
     if (!userid) {
       navigate('/login');
-    } else if (email === "smrutisouravmoharana222@gmail.com") {
+    } else if (email === "pustaksangrah540@gmail.com") {
       navigate('/dashboard');
     }
   }, [email, userid, navigate]);

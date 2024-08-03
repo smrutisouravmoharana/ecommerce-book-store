@@ -182,7 +182,7 @@ function ProductInfo() {
                                     <button
                                         onClick={() => addCart(products)}
                                         className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                                        disabled={products.stockStatus === 'Out of Stock'}
+                                        // disabled={products.stockStatus === 'Out of Stock'}
                                     >
                                         Add to Cart
                                     </button>
