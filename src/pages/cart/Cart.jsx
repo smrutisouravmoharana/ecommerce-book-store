@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import myContext from '../../context/data/myContext';
 import Layout from '../../components/layout/Layout';
-import Modal from '../../components/modal/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteFromCart } from '../../redux/cartSlice';
 import { toast } from 'react-toastify';
@@ -17,7 +16,7 @@ function Cart() {
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
-    toast.success('Delete cart');
+    toast.success('Deleted from cart');
   };
 
   useEffect(() => {
@@ -26,20 +25,27 @@ function Cart() {
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalGST, setTotalGST] = useState(0);
+  const [isOutOfStock, setIsOutOfStock] = useState(false);
+  const [showForm, setShowForm] = useState(false); // State for showing the form
 
   useEffect(() => {
     let tempAmount = 0;
     let tempGST = 0;
+    let outOfStock = false;
 
     cartItems.forEach((cartItem) => {
       const itemSalePrice = parseInt(cartItem.salePrice);
       const itemGST = itemSalePrice * 0.18; // 18% GST
       tempAmount += itemSalePrice;
       tempGST += itemGST;
+      if (cartItem.stockStatus === 'Out of Stock') {
+        outOfStock = true;
+      }
     });
 
     setTotalAmount(tempAmount);
     setTotalGST(tempGST);
+    setIsOutOfStock(outOfStock);
   }, [cartItems]);
 
   const shipping = parseInt(100);
@@ -50,18 +56,18 @@ function Cart() {
   const [pincode, setPincode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const handleBuyNowClick = () => {
+    if (isOutOfStock) {
+      toast.error('Some items are out of stock. Please remove them before proceeding.');
+      return;
+    }
+    setShowForm(true); // Show the form
+  };
+
   const buyNow = async () => {
     if (name === '' || address === '' || pincode === '' || phoneNumber === '') {
-      return toast.error('All fields are required', {
-        position: 'top-center',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
+      toast.error('All fields are required');
+      return;
     }
   
     const addressInfo = {
@@ -102,7 +108,7 @@ function Cart() {
           userid: JSON.parse(localStorage.getItem('user')).user.uid,
           paymentId,
           status: 'Pending', // Initial status
-          grandTotal: grandTotal.toFixed(2) // Include grand total
+          grandTotal: grandTotal.toFixed(2), // Include grand total
         };
   
         try {
@@ -114,6 +120,7 @@ function Cart() {
             dispatch(deleteFromCart(item));
           });
           toast.success('Cart cleared');
+          setShowForm(false); // Hide form after successful payment
         } catch (error) {
           console.log(error);
           toast.error('Failed to save order');
@@ -126,9 +133,7 @@ function Cart() {
   
     var pay = new window.Razorpay(options);
     pay.open();
-    console.log(pay);
   };
-  
 
   return (
     <Layout>
@@ -137,7 +142,7 @@ function Cart() {
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
           <div className="rounded-lg md:w-2/3">
             {cartItems.map((item, index) => {
-              const { title, salePrice, description, imageUrl } = item;
+              const { title, salePrice, description, imageUrl, stockStatus } = item;
               return (
                 <div className="justify-between mb-6 rounded-lg border drop-shadow-xl bg-white p-6 sm:flex sm:justify-start" key={index} style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '' }}>
                   <img src={imageUrl} alt="product-image" className="w-full rounded-lg sm:w-40" />
@@ -148,6 +153,9 @@ function Cart() {
                       <p className="mt-1 text-xs font-semibold text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>
                         ₹{salePrice}
                       </p>
+                      {stockStatus === 'Out of Stock' && (
+                        <p className="text-red-500 font-bold">Out of Stock</p>
+                      )}
                     </div>
                     <div onClick={() => deleteCart(item)} className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -160,39 +168,81 @@ function Cart() {
             })}
           </div>
 
-          <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3" style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '' }}>
-            <div className="mb-2 flex justify-between">
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>Subtotal</p>
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{totalAmount}</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>Shipping</p>
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{shipping}</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>GST (18%)</p>
-              <p className="text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{totalGST.toFixed(2)}</p>
-            </div>
-            <hr className="my-4" />
-            <div className="flex justify-between mb-3">
-              <p className="text-lg font-bold" style={{ color: mode === 'dark' ? 'white' : '' }}>Total</p>
-              <div>
-                <p className="mb-1 text-lg font-bold" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{grandTotal.toFixed(2)}</p>
+          <div className="mt-6 rounded-lg border drop-shadow-xl bg-white p-6 md:w-1/3" style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '' }}>
+            <h2 className="text-lg font-bold">Summary</h2>
+            <div className="mt-4">
+              <div className="flex justify-between text-gray-700">
+                <span>Subtotal</span>
+                <span>₹{totalAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-gray-700">
+                <span>GST (18%)</span>
+                <span>₹{totalGST.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-gray-700">
+                <span>Shipping</span>
+                <span>₹100.00</span>
+              </div>
+              <div className="flex justify-between font-bold">
+                <span>Total</span>
+                <span>₹{grandTotal.toFixed(2)}</span>
               </div>
             </div>
-            <Modal
-              name={name}
-              address={address}
-              pincode={pincode}
-              phoneNumber={phoneNumber}
-              setName={setName}
-              setAddress={setAddress}
-              setPincode={setPincode}
-              setPhoneNumber={setPhoneNumber}
-              buyNow={buyNow}
-            />
+            <button
+              onClick={handleBuyNowClick}
+              className="mt-4 w-full py-2 px-4 bg-blue-600 text-white rounded-md"
+            >
+              Buy Now
+            </button>
           </div>
         </div>
+        {showForm && (
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg" style={{ maxWidth: '400px', width: '100%', color: mode === 'dark' ? 'white' : '' }}>
+      <h2 className="text-lg font-bold mb-4">Enter Your Details</h2>
+      <input
+        type="text"
+        placeholder="Name"
+        className="mb-4 w-full p-2 border border-gray-300 rounded-md"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Address"
+        className="mb-4 w-full p-2 border border-gray-300 rounded-md"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Pincode"
+        className="mb-4 w-full p-2 border border-gray-300 rounded-md"
+        value={pincode}
+        onChange={(e) => setPincode(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Phone Number"
+        className="mb-4 w-full p-2 border border-gray-300 rounded-md"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+      <button
+        onClick={buyNow}
+        className="w-full py-2 px-4 bg-blue-600 text-white rounded-md"
+      >
+        Place Order
+      </button>
+      <button
+        onClick={() => setShowForm(false)}
+        className="mt-4 w-full py-2 px-4 bg-red-600 text-white rounded-md"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
       </div>
     </Layout>
   );

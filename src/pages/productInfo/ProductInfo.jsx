@@ -174,10 +174,15 @@ function ProductInfo() {
                                     <span className={`title-font font-medium text-2xl ${mode === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                                         ₹{products.salePrice}
                                     </span>
-
+                                    {products.stockStatus && (
+                                        <span className={`ml-4 font-semibold ${products.stockStatus === 'Out of Stock' ? 'text-red-500' : 'text-green-500'}`}>
+                                            {products.stockStatus}
+                                        </span>
+                                    )}
                                     <button
                                         onClick={() => addCart(products)}
                                         className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                                        disabled={products.stockStatus === 'Out of Stock'}
                                     >
                                         Add to Cart
                                     </button>

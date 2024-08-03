@@ -60,7 +60,7 @@ function ProductCard() {
                 </div>
                 <div className="flex flex-wrap -m-4">
                     {currentProducts.map((item, index) => {
-                        const { title, price, salePrice, brandName, imageUrl, id } = item;
+                        const { title, price, salePrice, brandName, imageUrl, id, stockStatus } = item;
                         return (
                             <div key={index} className="p-4 md:w-1/4 drop-shadow-lg">
                                 <div className="h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out border-gray-200 border-opacity-60 rounded-2xl overflow-hidden"
@@ -70,7 +70,7 @@ function ProductCard() {
                                     }}
                                 >
                                     <div onClick={() => window.location.href = `/productinfo/${id}`} className="flex justify-center cursor-pointer">
-                                        <img className=" w-full h-80 hover:scale-110 transition-scale-110 duration-300 ease-in-out" src={imageUrl} alt="Product" />
+                                        <img className="w-full h-80 hover:scale-110 transition-scale-110 duration-300 ease-in-out" src={imageUrl} alt="Product" />
                                     </div>
                                     <div className="p-5 border-t-2">
                                         <h2 className="tracking-widest text-xs title-font font-medium text-white-400 mb-1" style={{ color: mode === 'dark' ? 'white' : '#ffffff' }}>{brandName}</h2>
@@ -85,13 +85,16 @@ function ProductCard() {
                                                 `₹${price}`
                                             )}
                                         </p>
-                                        <div className="flex justify-center">
-                                            <button type="button"
+                                        {stockStatus && (
+                                            <span className={`ml-4 font-semibold ${stockStatus === 'Out of Stock' ? 'text-red-500' : 'text-green-500'}`}>
+                                                {stockStatus}
+                                            </span>
+                                        )}
+                                        <button type="button"
                                                 onClick={() => addCart(item)}
                                                 className="focus:outline-none text-black bg-white hover:bg-gray-200 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full py-2">
                                                 Add To Cart
-                                            </button>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

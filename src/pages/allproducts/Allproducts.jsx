@@ -85,6 +85,9 @@ function Allproducts() {
                                 </p>
                                 <Link to={`/productinfo/${item.id}`} className="text-blue-500">See More</Link>
                                 <p className={`mt-2 font-semibold ${mode === 'dark' ? 'text-white' : 'text-black'}`}>Brand: {item.brandName}</p>
+                                <p className={`mt-2 font-semibold ${item.stockStatus === 'Out of Stock' ? 'text-red-500' : mode === 'dark' ? 'text-white' : 'text-black'}`}>
+                                     {item.stockStatus}
+                                </p>
                                 <div className="mt-3 flex items-center justify-between">
                                     <div>
                                         {item.salePrice ? (
@@ -99,6 +102,7 @@ function Allproducts() {
                                     <button
                                         onClick={() => addCart(item)}
                                         className={`px-3 py-2 ${mode === 'dark' ? 'bg-white text-black' : 'bg-blue-500 text-white'} text-sm font-medium rounded`}
+                                        // disabled={item.stockStatus === 'Out of Stock'}
                                     >
                                         Add to Cart
                                     </button>

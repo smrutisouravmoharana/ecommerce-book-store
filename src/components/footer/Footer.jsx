@@ -107,13 +107,13 @@ function Footer() {
           <Link to={'/'} className='flex' onClick={scrollToTop}>
             <div className="flex">
               <h1 className='text-2xl font-bold text-black px-2 py-1 rounded' style={{ color: 'black' }}>
-                Book Shop
+              PUSTAK SANGRAH
               </h1>
 
             </div>
           </Link>
-          <p className="text-sm text-white sm:ml-6 sm:mt-0 mt-4" style={{ color: mode === 'dark' ? 'white' : '' }}>© 2024 Book Shop —
-            <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-white ml-1" target="_blank" style={{ color: mode === 'dark' ? 'white' : '' }}>www.bookshop.com</a>
+          <p className="text-sm text-white sm:ml-6 sm:mt-0 mt-4" style={{ color: mode === 'dark' ? 'white' : '' }}>© 2024 PUSTAK SANGRAH —
+            <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-white ml-1" target="_blank" style={{ color: mode === 'dark' ? 'white' : '' }}>www.pustaksangrah.com</a>
           </p>
           <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
             <a className="text-gray-500 ml-3" href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer">

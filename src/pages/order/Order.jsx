@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import myContext from '../../context/data/myContext';
 import Layout from '../../components/layout/Layout';
 import Loader from '../../components/loader/Loader';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { fireDB } from '../../fireabase/FirebaseConfig';
 
 function Order() {
   const user = JSON.parse(localStorage.getItem('user'));
   const userid = user ? user.user.uid : null;
   const email = user ? user.user.email : null;
   const context = useContext(myContext);
-  const { mode, loading, order, cancelOrder } = context;
+  const { mode, loading, setLoading, order, setOrder } = context;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +22,19 @@ function Order() {
     }
   }, [email, userid, navigate]);
 
+  useEffect(() => {
+    if (userid) {
+      setLoading(true);
+      const unsubscribe = onSnapshot(collection(fireDB, 'order'), (snapshot) => {
+        const ordersArray = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setOrder(ordersArray);
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [userid, setLoading, setOrder]);
+
   if (!userid) {
     return null;
   }
@@ -28,7 +43,7 @@ function Order() {
 
   const handleCancelOrder = (orderId) => {
     console.log('Cancel Order Clicked', orderId);
-    cancelOrder(orderId);
+    context.cancelOrder(orderId);
   };
 
   return (

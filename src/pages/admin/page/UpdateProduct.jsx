@@ -57,7 +57,7 @@ function UpdateProduct() {
                         onChange={(e) => setProducts({ ...products, brandName: e.target.value })}
                         name='brandName'
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
-                        placeholder='Product Auther name'
+                        placeholder='Product Author name'
                     />
                 </div>
                 <div>
@@ -90,6 +90,20 @@ function UpdateProduct() {
                         className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Product description'
                     ></textarea>
+                </div>
+                <div>
+                    <select
+                        name='stockStatus'
+                        value={products.stockStatus}
+                        onChange={(e) => setProducts({ ...products, stockStatus: e.target.value })}
+                        className='bg-gray-600 mb-4 px-2 py-2 w-full rounded-lg text-white outline-none'
+                    >
+                        <option value='' disabled>
+                            Select Stock Status
+                        </option>
+                        <option value='In Stock'>In Stock</option>
+                        <option value='Out of Stock'>Out of Stock</option>
+                    </select>
                 </div>
                 <div className='flex justify-center mb-3'>
                     <button

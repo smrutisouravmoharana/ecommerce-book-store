@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
@@ -17,13 +18,13 @@ const ContactUs = () => {
       id: 1,
       title: 'Our Main Office',
       icon: <MdOutlineAddLocation size={30} className="text-orange-600" />,
-      description: '12,Bhubaneswar,Odisha,754869',
+      description: 'Opp sbi main branch, Koshi college road,Khagaria, Bihar-851205',
     },
     {
       id: 2,
       title: 'Phone Number',
       icon: <MdOutlinePhone size={30} className="text-orange-600" />,
-      description: '+91-9360049337 (Toll Free)',
+      description: '+91-7479965857',
     },
     {
       id: 3,
@@ -35,7 +36,7 @@ const ContactUs = () => {
       id: 4,
       title: 'Email',
       icon: <MdOutlineMailOutline size={30} className="text-orange-600" />,
-      description: 'bookshop@gmail.com',
+      description: 'pustaksangrah134@gmail.com',
     },
   ];
 
@@ -110,7 +111,7 @@ const ContactUs = () => {
             </form>
             <div className="w-full lg:w-2/5">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.7329121291295!2d93.93296433765711!3d24.804597625564007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3749264d391265af%3A0xe367b71a2f6c9017!2s22%2C%20Governer%20Rd%2C%20Imphal%2C%20Manipur%20795001!5e0!3m2!1sen!2sin!4v1720432357342!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d12021.776970700173!2d86.44524235325544!3d25.50815882543738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sopp%20sbi%20main%20branch%20koshi%20college%20road%20khagaria%20bihar-851205!5e1!3m2!1sen!2sin!4v1722659331361!5m2!1sen!2sin"
                 className="w-full h-72 lg:h-96 rounded-lg"
                 allowFullScreen=""
                 loading="lazy"
@@ -118,6 +119,7 @@ const ContactUs = () => {
                 title="Google Map"
                 style={{ minHeight: '300px', border: mode === 'dark' ? '2px solid blue' : 'none' }}
               ></iframe>
+              
             </div>
 
           </div>

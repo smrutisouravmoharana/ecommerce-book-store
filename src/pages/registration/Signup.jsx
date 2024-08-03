@@ -44,8 +44,13 @@ function Signup() {
             setLoading(false);
             
         } catch (error) {
-            console.log(error);
             setLoading(false);
+            if (error.code === 'auth/email-already-in-use') {
+                toast.error("Email is already in use");
+            } else {
+                toast.error("Signup failed. Please try again.");
+                console.log(error);
+            }
         }
     }
 
