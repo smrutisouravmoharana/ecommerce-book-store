@@ -1,11 +1,11 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../context/data/myContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../fireabase/FirebaseConfig';
 import { toast } from 'react-toastify';
 import Loader from '../../components/loader/Loader';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 // Example background image URL (replace with your own)
 const backgroundImageUrl = 'https://img.freepik.com/free-photo/front-view-education-day-concept_23-2148779756.jpg?t=st=1720747555~exp=1720751155~hmac=5ebc2c1401c43ad29eb2b5a3e5f6615f7e057bf67b867eb80435b333aae35d80&w=740';
@@ -16,6 +16,8 @@ function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
 
@@ -37,7 +39,7 @@ function Login() {
             navigate('/');
             setLoading(false);
         } catch (error) {
-            console.log(error);
+            setError("Invalid username or password");
             setLoading(false);
         }
     };
@@ -61,6 +63,7 @@ function Login() {
                 <div className="">
                     <h1 className='text-center text-white text-xl mb-4 font-bold'>Login</h1>
                 </div>
+                {error && <div className="text-red-500 text-center mb-4">{error}</div>}
                 <div>
                     <input type="email"
                         value={email}
@@ -70,14 +73,20 @@ function Login() {
                         placeholder='Email'
                     />
                 </div>
-                <div>
+                <div className='relative'>
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Password'
                     />
+                    <button
+                        onClick={() => setShowPassword(!showPassword)}
+                        className='absolute top-2 right-2 text-white cursor-pointer hover:text-gray-300'
+                    >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
                 </div>
                 <div className='flex justify-center mb-3'>
                     <button

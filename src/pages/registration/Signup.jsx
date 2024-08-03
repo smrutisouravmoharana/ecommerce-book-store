@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../context/data/myContext';
 import { toast } from 'react-toastify';
@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, fireDB } from '../../fireabase/FirebaseConfig';
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import Loader from '../../components/loader/Loader';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 // Example background image URL (replace with your own)
 const backgroundImageUrl = 'https://img.freepik.com/free-photo/various-books-with-spectacles-table_1252-713.jpg?t=st=1720747641~exp=1720751241~hmac=311c0ce54c910b72c698ac4b111519db12873315bbdfecbf55a2cd8f27ada62a&w=740';
@@ -14,6 +15,7 @@ function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const context = useContext(myContext);
     const { loading, setLoading } = context;
@@ -92,14 +94,20 @@ function Signup() {
                         placeholder='Email'
                     />
                 </div>
-                <div>
+                <div className='relative'>
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder-text-gray-200 outline-none'
                         placeholder='Password'
                     />
+                    <button
+                        onClick={() => setShowPassword(!showPassword)}
+                        className='absolute top-2 right-2 text-white cursor-pointer hover:text-gray-300'
+                    >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
                 </div>
                 <div className='flex justify-center mb-3'>
                     <button
